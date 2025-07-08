@@ -21,7 +21,7 @@ const Index = () => {
               <Store className="w-7 h-7 text-white" />
             </div>
       
-            <img src="./images/logo1-Picsart-AiImageEnhancer.png" alt="ADOGENT Logo" className="h-92px w-auto"  />
+            <img src="./images/logo1-Picsart-AiImageEnhancer.png" alt="ADOGENT Logo" className="h-88px w-auto"  />
           </motion.div>
           
           <motion.nav
