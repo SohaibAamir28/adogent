@@ -11,7 +11,7 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-teal-800">
       {/* Header */}
       <header className="container mx-auto px-4 py-6">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-center">
           <motion.div
             className="flex items-center space-x-2"
             initial={{ x: -50, opacity: 0 }}
