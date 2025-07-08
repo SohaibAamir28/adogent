@@ -1,180 +1,142 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Heart, PackageSearch, ShoppingCart, Filter, Search, TrendingUp, Award, Shield } from 'lucide-react';
+import { ArrowLeft, Heart, PackageSearch, Diamond, ShoppingCart, CreditCard, BadgeDollarSign, Gift, Gem } from 'lucide-react'; 
 import { motion } from "framer-motion";
-import LuxuryProductCard from "@/components/LuxuryProductCard";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
-interface Seller {
-  name: string;
-  rating: number;
-  location: string;
-  verified: boolean;
-}
-
-interface LuxuryProduct {
-  id: number;
-  name: string;
-  brand: string;
-  prices: { seller: Seller; price: number; originalPrice?: number }[];
-  image: string;
-  category: string;
-  condition: string;
-  authenticity: 'verified' | 'pending' | 'guaranteed';
-  rarity: 'common' | 'rare' | 'ultra-rare';
-  year?: number;
-}
-
-const MarketPlace = () => {
+const Marketplace = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedBrand, setSelectedBrand] = useState('');
   const [priceRange, setPriceRange] = useState('');
-  const [condition, setCondition] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
   const [loadingProducts, setLoadingProducts] = useState(false);
-  const [products, setProducts] = useState<LuxuryProduct[]>([]);
+  const [products, setProducts] = useState<any[]>([]);
   const [showRecommendations, setShowRecommendations] = useState(false);
-  const [sortBy, setSortBy] = useState('price-low');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [favoriteCount, setFavoriteCount] = useState(0);
 
   const categories = [
-    { name: "Luxury Watches", value: "watches" },
-    { name: "Designer Handbags", value: "handbags" },
-    { name: "Fine Jewelry", value: "jewelry" },
-    { name: "Luxury Cars", value: "cars" },
-    { name: "Designer Shoes", value: "shoes" },
-    { name: "Art & Collectibles", value: "art" }
+    { name: "Luxury Watches", value: "watches", icon: "⌚" },
+    { name: "Designer Fragrances", value: "fragrances", icon: "🌸" },
+    { name: "High Fashion", value: "fashion", icon: "👗" },
+    { name: "Premium Jewelry", value: "jewelry", icon: "💎" },
+    { name: "Luxury Cars", value: "cars", icon: "🚗" },
+    { name: "Fine Art", value: "art", icon: "🎨" },
+    { name: "Real Estate", value: "realestate", icon: "🏛️" },
+    { name: "Luxury Travel", value: "travel", icon: "✈️" }
   ];
 
-  const brands = [
+  const luxuryBrands = [
     { name: "Rolex", value: "rolex" },
-    { name: "Chanel", value: "chanel" },
-    { name: "Louis Vuitton", value: "louis-vuitton" },
-    { name: "Hermès", value: "hermes" },
     { name: "Cartier", value: "cartier" },
-    { name: "Patek Philippe", value: "patek-philippe" }
+    { name: "Hermès", value: "hermes" },
+    { name: "Louis Vuitton", value: "lv" },
+    { name: "Chanel", value: "chanel" },
+    { name: "Tiffany & Co.", value: "tiffany" },
+    { name: "Rolls-Royce", value: "rollsroyce" },
+    { name: "Ferrari", value: "ferrari" }
   ];
 
   const priceRanges = [
-    { name: "Under $1,000", value: "0-1000" },
-    { name: "$1,000 - $5,000", value: "1000-5000" },
-    { name: "$5,000 - $25,000", value: "5000-25000" },
-    { name: "$25,000 - $100,000", value: "25000-100000" },
-    { name: "Over $100,000", value: "100000+" }
-  ];
-
-  const conditions = [
-    { name: "Brand New", value: "new" },
-    { name: "Like New", value: "like-new" },
-    { name: "Excellent", value: "excellent" },
-    { name: "Very Good", value: "very-good" },
-    { name: "Good", value: "good" }
+    { name: "Under $10K", value: "0-10000" },
+    { name: "$10K - $50K", value: "10000-50000" },
+    { name: "$50K - $100K", value: "50000-100000" },
+    { name: "$100K - $500K", value: "100000-500000" },
+    { name: "$500K - $1M", value: "500000-1000000" },
+    { name: "Above $1M", value: "1000000+" }
   ];
 
   // Enhanced luxury products data
-  const luxuryProducts: LuxuryProduct[] = [
+  const luxuryProducts = [
     {
       id: 1,
-      name: "Submariner Date 41mm",
-      brand: "Rolex",
-      prices: [
-        { 
-          seller: { name: "Crown & Caliber", rating: 4.9, location: "Atlanta, GA", verified: true }, 
-          price: 13500, 
-          originalPrice: 14800 
-        },
-        { 
-          seller: { name: "Bob's Watches", rating: 4.8, location: "Newport Beach, CA", verified: true }, 
-          price: 13800 
-        },
-        { 
-          seller: { name: "Tourneau", rating: 4.7, location: "New York, NY", verified: true }, 
-          price: 14200 
-        }
-      ],
-      image: "/images/rolex-submariner.webp",
-      category: "watches",
-      condition: "Excellent",
-      authenticity: "verified",
-      rarity: "rare",
-      year: 2022
+      name: "Rolls-Royce Phantom VIII",
+      brand: "Rolls-Royce",
+      price: 450000,
+      originalPrice: 500000,
+      image: "https://images.unsplash.com/photo-1563720223185-11003d516935?w=500&h=300&fit=crop",
+      category: "cars",
+      description: "The pinnacle of luxury motoring with bespoke craftsmanship",
+      features: ["Handcrafted Interior", "V12 Engine", "Starlight Headliner"],
+      availability: "Limited Edition",
+      rating: 5.0,
+      reviews: 24
     },
     {
       id: 2,
-      name: "Classic Flap Bag Medium",
-      brand: "Chanel",
-      prices: [
-        { 
-          seller: { name: "Fashionphile", rating: 4.9, location: "Beverly Hills, CA", verified: true }, 
-          price: 8500 
-        },
-        { 
-          seller: { name: "The RealReal", rating: 4.6, location: "San Francisco, CA", verified: true }, 
-          price: 8800,
-          originalPrice: 9200
-        },
-        { 
-          seller: { name: "Vestiaire Collective", rating: 4.5, location: "London, UK", verified: false }, 
-          price: 8200 
-        }
-      ],
-      image: "/images/bag.webp",
-      category: "handbags",
-      condition: "Like New",
-      authenticity: "guaranteed",
-      rarity: "common"
+      name: "Patek Philippe Nautilus",
+      brand: "Patek Philippe",
+      price: 85000,
+      originalPrice: 90000,
+      image: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=500&h=300&fit=crop",
+      category: "watches",
+      description: "Iconic luxury timepiece with exceptional craftsmanship",
+      features: ["Swiss Movement", "18K Gold", "Water Resistant"],
+      availability: "In Stock",
+      rating: 4.9,
+      reviews: 156
     },
     {
       id: 3,
-      name: "Phantom VIII",
-      brand: "Rolls-Royce",
-      prices: [
-        { 
-          seller: { name: "Barrett-Jackson", rating: 4.8, location: "Scottsdale, AZ", verified: true }, 
-          price: 485000 
-        },
-        { 
-          seller: { name: "RM Sotheby's", rating: 4.9, location: "Monaco", verified: true }, 
-          price: 495000,
-          originalPrice: 520000
-        }
-      ],
-      image: "/images/rolls-royce.jpg",
-      category: "cars",
-      condition: "Excellent",
-      authenticity: "verified",
-      rarity: "ultra-rare",
-      year: 2023
+      name: "Hermès Birkin 35",
+      brand: "Hermès",
+      price: 35000,
+      originalPrice: 40000,
+      image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=500&h=300&fit=crop",
+      category: "fashion",
+      description: "The most coveted handbag in the world",
+      features: ["Crocodile Leather", "Hand-Stitched", "Palladium Hardware"],
+      availability: "Waitlist Only",
+      rating: 5.0,
+      reviews: 89
     },
     {
       id: 4,
-      name: "Nautilus 5711/1A",
-      brand: "Patek Philippe",
-      prices: [
-        { 
-          seller: { name: "Antiquorum", rating: 4.8, location: "Geneva, Switzerland", verified: true }, 
-          price: 125000 
-        },
-        { 
-          seller: { name: "Christie's", rating: 4.9, location: "New York, NY", verified: true }, 
-          price: 128000,
-          originalPrice: 135000
-        }
-      ],
-      image: "/images/patek-philippe.jpg",
-      category: "watches",
-      condition: "Brand New",
-      authenticity: "guaranteed",
-      rarity: "ultra-rare",
-      year: 2021
+      name: "Tiffany Yellow Diamond Necklace",
+      brand: "Tiffany & Co.",
+      price: 125000,
+      originalPrice: 150000,
+      image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=500&h=300&fit=crop",
+      category: "jewelry",
+      description: "Exquisite yellow diamond set in platinum",
+      features: ["5 Carat Diamond", "Platinum Setting", "Certified Authentic"],
+      availability: "Exclusive",
+      rating: 5.0,
+      reviews: 45
+    },
+    {
+      id: 5,
+      name: "Tom Ford Private Blend Oud Wood",
+      brand: "Tom Ford",
+      price: 350,
+      originalPrice: 380,
+      image: "https://images.unsplash.com/photo-1541643600914-78b084683601?w=500&h=300&fit=crop",
+      category: "fragrances",
+      description: "Rare oud wood fragrance with exotic spices",
+      features: ["Oud Wood", "Rare Ingredients", "Limited Edition"],
+      availability: "In Stock",
+      rating: 4.8,
+      reviews: 234
+    },
+    {
+      id: 6,
+      name: "Penthouse Manhattan Views",
+      brand: "Elite Properties",
+      price: 12500000,
+      originalPrice: 13000000,
+      image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=500&h=300&fit=crop",
+      category: "realestate",
+      description: "Luxury penthouse with panoramic city views",
+      features: ["360° Views", "Private Elevator", "Rooftop Terrace"],
+      availability: "Exclusive Listing",
+      rating: 5.0,
+      reviews: 12
     }
   ];
 
@@ -182,292 +144,334 @@ const MarketPlace = () => {
     setLoadingProducts(true);
     try {
       setTimeout(() => {
-        let filteredProducts = [...luxuryProducts];
+        let filteredProducts = luxuryProducts;
         
-        // Apply filters
         if (selectedCategory) {
           filteredProducts = filteredProducts.filter(p => p.category === selectedCategory);
         }
+        
         if (selectedBrand) {
-          filteredProducts = filteredProducts.filter(p => p.brand.toLowerCase().replace(/\s+/g, '-') === selectedBrand);
+          filteredProducts = filteredProducts.filter(p => 
+            p.brand.toLowerCase().includes(selectedBrand.toLowerCase())
+          );
         }
+        
         if (searchQuery) {
           filteredProducts = filteredProducts.filter(p => 
             p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            p.brand.toLowerCase().includes(searchQuery.toLowerCase())
+            p.description.toLowerCase().includes(searchQuery.toLowerCase())
           );
         }
-
-        // Apply sorting
-        switch (sortBy) {
-          case 'price-low':
-            filteredProducts.sort((a, b) => Math.min(...a.prices.map(p => p.price)) - Math.min(...b.prices.map(p => p.price)));
-            break;
-          case 'price-high':
-            filteredProducts.sort((a, b) => Math.min(...b.prices.map(p => p.price)) - Math.min(...a.prices.map(p => p.price)));
-            break;
-          case 'rarity':
-            const rarityOrder = { 'ultra-rare': 3, 'rare': 2, 'common': 1 };
-            filteredProducts.sort((a, b) => rarityOrder[b.rarity] - rarityOrder[a.rarity]);
-            break;
-        }
-
+        
         setProducts(filteredProducts);
         setShowRecommendations(true);
-        toast.success(`Found ${filteredProducts.length} luxury items with price comparison!`);
+        toast.success("Curated luxury selections just for you!");
       }, 2000);
     } catch (error) {
-      toast.error("Failed to fetch luxury products.");
+      toast.error("Failed to fetch luxury recommendations.");
       console.error("❌ Error fetching products", error);
     } finally {
       setLoadingProducts(false);
     }
   };
 
-  const handleAddToFavorites = async (product: LuxuryProduct) => {
+  const handleAddToWishlist = async (product: any) => {
     try {
-      // Simulate API call
-      toast.success(`${product.name} added to favorites!`);
+      setFavoriteCount(prev => prev + 1);
+      toast.success(`${product.name} added to your luxury wishlist!`);
     } catch (error) {
-      toast.error('Error adding to favorites');
+      toast.error('Error adding to wishlist');
     }
   };
 
+  const handleQuickPurchase = (product: any) => {
+    toast.success(`Initiating luxury concierge service for ${product.name}`);
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 relative overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-      </div>
-
-      <header className="relative container mx-auto px-4 py-6 flex justify-between items-center border-b border-blue-300/20 backdrop-blur-sm">
-        <Link to="/" className="flex items-center space-x-2 text-white hover:text-blue-300 transition-colors">
-          <ArrowLeft className="w-5 h-5" />
-          <span className="font-medium">Back to Home</span>
-        </Link>
-
-        <div className="flex items-center space-x-6">
-          <Link
-            to="/favorites"
-            className="flex items-center space-x-2 text-white hover:text-blue-300 transition font-semibold"
-          >
-            <Heart className="w-5 h-5" />
-            <span>Favorites</span>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900">
+      {/* Premium Header */}
+      <header className="container mx-auto px-4 py-6 border-b border-white/10">
+        <div className="flex justify-between items-center">
+          <Link to="/" className="flex items-center space-x-2 text-white hover:text-blue-300 transition-colors">
+            <ArrowLeft className="w-5 h-5" />
+            <span className="font-medium">Return Home</span>
           </Link>
-          <Badge className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-3 py-1">
-            <Shield className="w-3 h-3 mr-1" />
-            Verified Platform
-          </Badge>
+
+          <div className="flex items-center space-x-6">
+            <div className="flex items-center space-x-2 text-blue-300">
+              <Diamond className="w-5 h-5" />
+              <span className="font-medium">Premium Member</span>
+            </div>
+            
+            <Link to="/wishlist" className="flex items-center space-x-2 text-white hover:text-blue-400 transition relative">
+              <Heart className="w-5 h-5" />
+              <span>Wishlist</span>
+              {favoriteCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  {favoriteCount}
+                </span>
+              )}
+            </Link>
+          </div>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="relative container mx-auto px-4 py-16 text-center">
+      <section className="container mx-auto px-4 py-16 text-center">
         <motion.div 
-          initial={{ y: -50, opacity: 0 }} 
+          initial={{ y: -30, opacity: 0 }} 
           animate={{ y: 0, opacity: 1 }} 
           transition={{ duration: 1 }}
-          className="space-y-6"
+          className="mb-8"
         >
-          <div className="flex justify-center items-center space-x-4 mb-8">
-            <ShoppingCart className="w-20 h-20 text-blue-400" />
-            <Award className="w-16 h-16 text-gold-400" />
-          </div>
-          
-          <h1 className="text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-400 mb-4">
-            LUXE MARKETPLACE
-          </h1>
-          <p className="text-xl text-blue-200 max-w-3xl mx-auto leading-relaxed">
-            Global luxury reselling platform with verified authenticity & real-time price comparison from premium dealers worldwide
-          </p>
-          
-          <div className="flex justify-center items-center space-x-8 mt-8">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-white">500K+</div>
-              <div className="text-blue-300 text-sm">Authenticated Items</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-white">1000+</div>
-              <div className="text-blue-300 text-sm">Verified Dealers</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-white">50+</div>
-              <div className="text-blue-300 text-sm">Countries</div>
-            </div>
+          <div className="flex justify-center items-center space-x-4 mb-6">
+            <Diamond className="w-12 h-12 text-blue-400" />
+            <Gem className="w-16 h-16 text-blue-300" />
+            <Diamond className="w-12 h-12 text-blue-400" />
           </div>
         </motion.div>
+        
+        <h1 className="text-6xl lg:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-blue-500 mb-6">
+          LUXURY MARKETPLACE
+        </h1>
+        <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+          Discover the world's most exclusive luxury goods, curated by experts and available to discerning collectors
+        </p>
       </section>
 
-      {/* Search and Filter Section */}
-      <section className="relative container mx-auto px-4 pb-12">
-        <Card className="max-w-6xl mx-auto bg-gradient-to-br from-slate-800/80 to-blue-900/80 backdrop-blur-xl border border-blue-300/20">
-          <CardHeader className="text-center">
-            <CardTitle className="text-3xl text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400 mb-2">
-              Find Your Perfect Luxury Item
+      {/* Filters & Search */}
+      <section className="container mx-auto px-4 pb-12">
+        <Card className="max-w-6xl mx-auto bg-white/5 backdrop-blur-xl border-white/10">
+          <CardHeader className="text-center border-b border-white/10">
+            <CardTitle className="text-3xl text-white mb-2 flex items-center justify-center space-x-3">
+              <Gift className="w-8 h-8 text-blue-400" />
+              <span>Luxury Concierge</span>
             </CardTitle>
-            <p className="text-blue-200">Advanced search with price comparison across global dealers</p>
+            <p className="text-gray-300">Tell us your preferences and we'll curate the perfect selection</p>
           </CardHeader>
 
-          <CardContent className="space-y-8">
+          <CardContent className="p-8">
             {/* Search Bar */}
-            <div className="relative max-w-2xl mx-auto">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-400 w-5 h-5" />
+            <div className="mb-8">
+              <Label className="text-white font-medium mb-3 block">Search Luxury Items</Label>
               <Input
-                placeholder="Search luxury items, brands, or models..."
+                placeholder="Search for luxury watches, jewelry, cars..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 bg-white/10 border-blue-300/30 text-white placeholder-blue-300/70 text-lg py-6"
+                className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 text-lg py-3"
               />
             </div>
 
-            {/* Advanced Filters */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="space-y-2">
-                <Label className="text-blue-200 font-medium flex items-center gap-2">
-                  <Filter className="w-4 h-4" />
-                  Category
-                </Label>
+            {/* Filter Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+              <div className="space-y-3">
+                <Label className="text-white font-medium">Category</Label>
                 <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                  <SelectTrigger className="bg-white/10 border-blue-300/30 text-white">
-                    <SelectValue placeholder="All Categories" />
+                  <SelectTrigger className="bg-white/10 border-white/20 text-white">
+                    <SelectValue placeholder="Select category" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-slate-800 border-white/20">
                     {categories.map(cat => (
-                      <SelectItem key={cat.value} value={cat.value}>{cat.name}</SelectItem>
+                      <SelectItem key={cat.value} value={cat.value} className="text-white hover:bg-white/10">
+                        <span className="flex items-center space-x-2">
+                          <span>{cat.icon}</span>
+                          <span>{cat.name}</span>
+                        </span>
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
 
-              <div className="space-y-2">
-                <Label className="text-blue-200 font-medium">Brand</Label>
+              <div className="space-y-3">
+                <Label className="text-white font-medium">Luxury Brand</Label>
                 <Select value={selectedBrand} onValueChange={setSelectedBrand}>
-                  <SelectTrigger className="bg-white/10 border-blue-300/30 text-white">
-                    <SelectValue placeholder="All Brands" />
+                  <SelectTrigger className="bg-white/10 border-white/20 text-white">
+                    <SelectValue placeholder="Select brand" />
                   </SelectTrigger>
-                  <SelectContent>
-                    {brands.map(brand => (
-                      <SelectItem key={brand.value} value={brand.value}>{brand.name}</SelectItem>
+                  <SelectContent className="bg-slate-800 border-white/20">
+                    {luxuryBrands.map(brand => (
+                      <SelectItem key={brand.value} value={brand.value} className="text-white hover:bg-white/10">
+                        {brand.name}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
 
-              <div className="space-y-2">
-                <Label className="text-blue-200 font-medium">Price Range</Label>
+              <div className="space-y-3">
+                <Label className="text-white font-medium">Price Range</Label>
                 <Select value={priceRange} onValueChange={setPriceRange}>
-                  <SelectTrigger className="bg-white/10 border-blue-300/30 text-white">
-                    <SelectValue placeholder="Any Price" />
+                  <SelectTrigger className="bg-white/10 border-white/20 text-white">
+                    <SelectValue placeholder="Select range" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-slate-800 border-white/20">
                     {priceRanges.map(range => (
-                      <SelectItem key={range.value} value={range.value}>{range.name}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-blue-200 font-medium">Condition</Label>
-                <Select value={condition} onValueChange={setCondition}>
-                  <SelectTrigger className="bg-white/10 border-blue-300/30 text-white">
-                    <SelectValue placeholder="Any Condition" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {conditions.map(cond => (
-                      <SelectItem key={cond.value} value={cond.value}>{cond.name}</SelectItem>
+                      <SelectItem key={range.value} value={range.value} className="text-white hover:bg-white/10">
+                        {range.name}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
             </div>
 
-            {/* Sort and Search Button */}
-            <div className="flex flex-col sm:flex-row gap-4 items-center">
-              <div className="flex items-center space-x-2">
-                <TrendingUp className="w-4 h-4 text-blue-400" />
-                <Label className="text-blue-200 font-medium">Sort by:</Label>
-                <Select value={sortBy} onValueChange={setSortBy}>
-                  <SelectTrigger className="w-40 bg-white/10 border-blue-300/30 text-white">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="price-low">Price: Low to High</SelectItem>
-                    <SelectItem value="price-high">Price: High to Low</SelectItem>
-                    <SelectItem value="rarity">Rarity</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <Button
-                onClick={fetchRecommendations}
-                disabled={loadingProducts}
-                className="flex-1 sm:flex-none bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-700 hover:via-indigo-700 hover:to-purple-700 text-white py-6 px-8 text-lg font-semibold shadow-2xl"
-              >
-                {loadingProducts ? (
-                  <div className="flex items-center space-x-2 justify-center">
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                    <span>Searching Global Market...</span>
-                  </div>
-                ) : (
-                  <>
-                    <PackageSearch className="w-5 h-5 mr-2" />
-                    Compare Prices & Find Best Deals
-                  </>
-                )}
-              </Button>
-            </div>
+            {/* Action Button */}
+            <Button
+              onClick={fetchRecommendations}
+              disabled={loadingProducts}
+              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-4 text-lg font-medium rounded-xl"
+            >
+              {loadingProducts ? (
+                <div className="flex items-center space-x-3 justify-center">
+                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+                  <span>Curating luxury selections...</span>
+                </div>
+              ) : (
+                <div className="flex items-center space-x-3">
+                  <PackageSearch className="w-6 h-6" />
+                  <span>Discover Luxury Collections</span>
+                </div>
+              )}
+            </Button>
           </CardContent>
         </Card>
       </section>
 
-      {/* Products Display */}
+      {/* Luxury Product Grid */}
       {showRecommendations && (
-        <section className="relative container mx-auto px-4 pb-20">
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="max-w-7xl mx-auto"
-          >
-            <div className="flex justify-between items-center mb-8">
-              <h2 className="text-3xl font-bold text-white">
-                Luxury Items Found ({products.length})
-              </h2>
-              <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-4 py-2">
-                Price comparison across {products.reduce((acc, p) => acc + p.prices.length, 0)} dealers
-              </Badge>
-            </div>
+        <section className="container mx-auto px-4 pb-20">
+          <div className="max-w-7xl mx-auto">
+            <Card className="bg-white/5 backdrop-blur-xl border-white/10">
+              <CardHeader className="border-b border-white/10">
+                <CardTitle className="text-white text-2xl flex items-center space-x-3">
+                  <Gem className="w-6 h-6 text-blue-400" />
+                  <span>Curated Luxury Selection</span>
+                </CardTitle>
+                <p className="text-gray-300">
+                  {products.length} exclusive items matched to your preferences
+                </p>
+              </CardHeader>
+              
+              <CardContent className="p-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {products.map((product) => (
+                    <motion.div
+                      key={product.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 }}
+                    >
+                      <Card className="bg-white/10 backdrop-blur-md border-white/20 overflow-hidden hover:scale-[1.02] transition-all duration-300 group">
+                        <div className="relative">
+                          <img 
+                            src={product.image} 
+                            alt={product.name} 
+                            className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300" 
+                          />
+                          <div className="absolute top-4 right-4 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                            {product.availability}
+                          </div>
+                          {product.originalPrice > product.price && (
+                            <div className="absolute top-4 left-4 bg-green-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                              Save ${(product.originalPrice - product.price).toLocaleString()}
+                            </div>
+                          )}
+                        </div>
+                        
+                        <CardContent className="p-6 space-y-4">
+                          <div>
+                            <p className="text-blue-400 text-sm font-medium">{product.brand}</p>
+                            <h3 className="text-white text-xl font-bold">{product.name}</h3>
+                            <p className="text-gray-300 text-sm mt-2">{product.description}</p>
+                          </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
-              {products.map((product, index) => (
-                <motion.div
-                  key={product.id}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <LuxuryProductCard 
-                    product={product}
-                    onAddToFavorites={handleAddToFavorites}
-                  />
-                </motion.div>
-              ))}
-            </div>
+                          <div className="flex items-center space-x-1">
+                            {[...Array(5)].map((_, i) => (
+                              <span key={i} className={`text-sm ${i < Math.floor(product.rating) ? 'text-yellow-400' : 'text-gray-500'}`}>
+                                ★
+                              </span>
+                            ))}
+                            <span className="text-gray-400 text-sm ml-2">({product.reviews} reviews)</span>
+                          </div>
 
-            {products.length === 0 && (
-              <div className="text-center py-20">
-                <PackageSearch className="w-16 h-16 text-blue-400 mx-auto mb-4" />
-                <h3 className="text-2xl font-bold text-white mb-2">No items found</h3>
-                <p className="text-blue-200">Try adjusting your search criteria</p>
-              </div>
-            )}
-          </motion.div>
+                          <div className="space-y-2">
+                            <div className="flex items-center justify-between">
+                              <span className="text-2xl font-bold text-white">
+                                ${product.price.toLocaleString()}
+                              </span>
+                              {product.originalPrice > product.price && (
+                                <span className="text-gray-400 line-through text-lg">
+                                  ${product.originalPrice.toLocaleString()}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+
+                          <div className="flex flex-wrap gap-2 mb-4">
+                            {product.features.map((feature: string, index: number) => (
+                              <span key={index} className="bg-blue-600/20 text-blue-300 px-2 py-1 rounded-md text-xs">
+                                {feature}
+                              </span>
+                            ))}
+                          </div>
+
+                          <div className="flex space-x-3">
+                            <Button 
+                              onClick={() => handleAddToWishlist(product)}
+                              variant="outline"
+                              className="flex-1 border-white/20 text-white hover:bg-white/10"
+                            >
+                              <Heart className="w-4 h-4 mr-2" />
+                              Wishlist
+                            </Button>
+                            
+                            <Button 
+                              onClick={() => handleQuickPurchase(product)}
+                              className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                            >
+                              <CreditCard className="w-4 h-4 mr-2" />
+                              Inquire
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </section>
       )}
+
+      {/* Luxury Services Footer */}
+      <footer className="border-t border-white/10 bg-black/20 backdrop-blur-xl">
+        <div className="container mx-auto px-4 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div className="space-y-3">
+              <BadgeDollarSign className="w-12 h-12 text-blue-400 mx-auto" />
+              <h3 className="text-white text-xl font-bold">Concierge Service</h3>
+              <p className="text-gray-300">Personal luxury shopping assistant available 24/7</p>
+            </div>
+            
+            <div className="space-y-3">
+              <CreditCard className="w-12 h-12 text-blue-400 mx-auto" />
+              <h3 className="text-white text-xl font-bold">Flexible Payment</h3>
+              <p className="text-gray-300">Private financing and payment plans available</p>
+            </div>
+            
+            <div className="space-y-3">
+              <Diamond className="w-12 h-12 text-blue-400 mx-auto" />
+              <h3 className="text-white text-xl font-bold">Authentication</h3>
+              <p className="text-gray-300">Every item verified by luxury goods experts</p>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
 
-export default MarketPlace;
+export default Marketplace;
