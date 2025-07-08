@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Heart, PackageSearch, Diamond, ShoppingCart, CreditCard, BadgeDollarSign, Gift, Gem } from 'lucide-react'; 
+import { ArrowLeft, Heart, PackageSearch, Diamond, ShoppingCart, CreditCard, BadgeDollarSign, Gift, Gem } from 'lucide-react';
 import { motion } from "framer-motion";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -52,7 +52,6 @@ const Marketplace = () => {
     { name: "Above $1M", value: "1000000+" }
   ];
 
-  // Enhanced luxury products data
   const luxuryProducts = [
     {
       id: 1,
@@ -190,7 +189,6 @@ const Marketplace = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900">
-      {/* Premium Header */}
       <header className="container mx-auto px-4 py-6 border-b border-white/10">
         <div className="flex justify-between items-center">
           <Link to="/" className="flex items-center space-x-2 text-white hover:text-blue-300 transition-colors">
@@ -217,7 +215,6 @@ const Marketplace = () => {
         </div>
       </header>
 
-      {/* Hero Section */}
       <section className="container mx-auto px-4 py-16 text-center">
         <motion.div 
           initial={{ y: -30, opacity: 0 }} 
@@ -240,7 +237,6 @@ const Marketplace = () => {
         </p>
       </section>
 
-      {/* Filters & Search */}
       <section className="container mx-auto px-4 pb-12">
         <Card className="max-w-6xl mx-auto bg-white/5 backdrop-blur-xl border-white/10">
           <CardHeader className="text-center border-b border-white/10">
@@ -252,7 +248,6 @@ const Marketplace = () => {
           </CardHeader>
 
           <CardContent className="p-8">
-            {/* Search Bar */}
             <div className="mb-8">
               <Label className="text-white font-medium mb-3 block">Search Luxury Items</Label>
               <Input
@@ -263,7 +258,6 @@ const Marketplace = () => {
               />
             </div>
 
-            {/* Filter Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               <div className="space-y-3">
                 <Label className="text-white font-medium">Category</Label>
@@ -317,7 +311,6 @@ const Marketplace = () => {
               </div>
             </div>
 
-            {/* Action Button */}
             <Button
               onClick={fetchRecommendations}
               disabled={loadingProducts}
@@ -339,7 +332,6 @@ const Marketplace = () => {
         </Card>
       </section>
 
-      {/* Luxury Product Grid */}
       {showRecommendations && (
         <section className="container mx-auto px-4 pb-20">
           <div className="max-w-7xl mx-auto">
@@ -363,80 +355,88 @@ const Marketplace = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.1 }}
                     >
-                      <Card className="bg-white/10 backdrop-blur-md border-white/20 overflow-hidden hover:scale-[1.02] transition-all duration-300 group">
-                        <div className="relative">
-                          <img 
-                            src={product.image} 
-                            alt={product.name} 
-                            className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300" 
-                          />
-                          <div className="absolute top-4 right-4 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                            {product.availability}
-                          </div>
-                          {product.originalPrice > product.price && (
-                            <div className="absolute top-4 left-4 bg-green-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                              Save ${(product.originalPrice - product.price).toLocaleString()}
+                      <Link to={`/product/${product.id}`} className="block">
+                        <Card className="bg-white/10 backdrop-blur-md border-white/20 overflow-hidden hover:scale-[1.02] transition-all duration-300 group cursor-pointer">
+                          <div className="relative">
+                            <img 
+                              src={product.image} 
+                              alt={product.name} 
+                              className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300" 
+                            />
+                            <div className="absolute top-4 right-4 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                              {product.availability}
                             </div>
-                          )}
-                        </div>
-                        
-                        <CardContent className="p-6 space-y-4">
-                          <div>
-                            <p className="text-blue-400 text-sm font-medium">{product.brand}</p>
-                            <h3 className="text-white text-xl font-bold">{product.name}</h3>
-                            <p className="text-gray-300 text-sm mt-2">{product.description}</p>
+                            {product.originalPrice > product.price && (
+                              <div className="absolute top-4 left-4 bg-green-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                                Save ${(product.originalPrice - product.price).toLocaleString()}
+                              </div>
+                            )}
                           </div>
+                          
+                          <CardContent className="p-6 space-y-4">
+                            <div>
+                              <p className="text-blue-400 text-sm font-medium">{product.brand}</p>
+                              <h3 className="text-white text-xl font-bold">{product.name}</h3>
+                              <p className="text-gray-300 text-sm mt-2">{product.description}</p>
+                            </div>
 
-                          <div className="flex items-center space-x-1">
-                            {[...Array(5)].map((_, i) => (
-                              <span key={i} className={`text-sm ${i < Math.floor(product.rating) ? 'text-yellow-400' : 'text-gray-500'}`}>
-                                ★
-                              </span>
-                            ))}
-                            <span className="text-gray-400 text-sm ml-2">({product.reviews} reviews)</span>
-                          </div>
-
-                          <div className="space-y-2">
-                            <div className="flex items-center justify-between">
-                              <span className="text-2xl font-bold text-white">
-                                ${product.price.toLocaleString()}
-                              </span>
-                              {product.originalPrice > product.price && (
-                                <span className="text-gray-400 line-through text-lg">
-                                  ${product.originalPrice.toLocaleString()}
+                            <div className="flex items-center space-x-1">
+                              {[...Array(5)].map((_, i) => (
+                                <span key={i} className={`text-sm ${i < Math.floor(product.rating) ? 'text-yellow-400' : 'text-gray-500'}`}>
+                                  ★
                                 </span>
-                              )}
+                              ))}
+                              <span className="text-gray-400 text-sm ml-2">({product.reviews} reviews)</span>
                             </div>
-                          </div>
 
-                          <div className="flex flex-wrap gap-2 mb-4">
-                            {product.features.map((feature: string, index: number) => (
-                              <span key={index} className="bg-blue-600/20 text-blue-300 px-2 py-1 rounded-md text-xs">
-                                {feature}
-                              </span>
-                            ))}
-                          </div>
+                            <div className="space-y-2">
+                              <div className="flex items-center justify-between">
+                                <span className="text-2xl font-bold text-white">
+                                  ${product.price.toLocaleString()}
+                                </span>
+                                {product.originalPrice > product.price && (
+                                  <span className="text-gray-400 line-through text-lg">
+                                    ${product.originalPrice.toLocaleString()}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
 
-                          <div className="flex space-x-3">
-                            <Button 
-                              onClick={() => handleAddToWishlist(product)}
-                              variant="outline"
-                              className="flex-1 border-white/20 text-white hover:bg-white/10"
-                            >
-                              <Heart className="w-4 h-4 mr-2" />
-                              Wishlist
-                            </Button>
-                            
-                            <Button 
-                              onClick={() => handleQuickPurchase(product)}
-                              className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-                            >
-                              <CreditCard className="w-4 h-4 mr-2" />
-                              Inquire
-                            </Button>
-                          </div>
-                        </CardContent>
-                      </Card>
+                            <div className="flex flex-wrap gap-2 mb-4">
+                              {product.features.map((feature: string, index: number) => (
+                                <span key={index} className="bg-blue-600/20 text-blue-300 px-2 py-1 rounded-md text-xs">
+                                  {feature}
+                                </span>
+                              ))}
+                            </div>
+
+                            <div className="flex space-x-3">
+                              <Button 
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  handleAddToWishlist(product);
+                                }}
+                                variant="outline"
+                                className="flex-1 border-white/20 text-white hover:bg-white/10"
+                              >
+                                <Heart className="w-4 h-4 mr-2" />
+                                Wishlist
+                              </Button>
+                              
+                              <Button 
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  handleQuickPurchase(product);
+                                }}
+                                className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                              >
+                                <CreditCard className="w-4 h-4 mr-2" />
+                                Inquire
+                              </Button>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      </Link>
                     </motion.div>
                   ))}
                 </div>
@@ -446,7 +446,6 @@ const Marketplace = () => {
         </section>
       )}
 
-      {/* Luxury Services Footer */}
       <footer className="border-t border-white/10 bg-black/20 backdrop-blur-xl">
         <div className="container mx-auto px-4 py-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
