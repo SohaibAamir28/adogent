@@ -43,8 +43,6 @@ const Index = () => {
 
             <p className="text-xl text-gray-300 leading-relaxed">
               Our AI powered agents help pull prices from trusted sources around the globe, so you don’t have to. 
-            </p>
-             <p className="text-xl text-gray-300 leading-relaxed">
               Know exactly where the best price is in seconds.
             </p>
 
@@ -134,7 +132,7 @@ const Index = () => {
             Why Choose ADOGENT?
           </h2>
           <p className="text-gray-400 text-lg">
-            Advanced technology meets luxury reselling.
+            Access exclusive fashion from the world’s finest sellers
           </p>
         </div>
 
