@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -169,6 +168,10 @@ const Marketplace = () => {
     } catch (error) {
       toast.error('Error adding to wishlist');
     }
+  };
+
+  const handleViewProduct = (product: any) => {
+    toast.success(`Opening detailed view for ${product.name}`);
   };
 
   return (
