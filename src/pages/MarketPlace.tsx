@@ -65,7 +65,7 @@ const MarketPlace = () => {
         // Replace the below line with actual API fetch if available
         setProducts(dummyProducts);  // Using dummy data for now
         setShowRecommendations(true);
-        toast.success("Here are your luxury product recommendations!");
+        toast.success("Here are your personalised product recommendations!");
       }, 2000); // Simulate a 2-second delay for loading
     } catch (error) {
       toast.error("Failed to fetch product recommendations.");
