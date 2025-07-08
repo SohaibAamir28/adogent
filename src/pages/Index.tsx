@@ -86,8 +86,8 @@ const Index = () => {
             </div>
           </motion.div>
 
-  <div className="relative">
-  <div className="flex space-x-6">
+ <div className="relative">
+  <div className="space-y-6">
     {[
       { Icon: Cpu, title: "AI Analysis", desc: "Explore a wide range of styles and choices tailored to your taste", gradient: "from-purple-500 via-blue-500 to-teal-500" },
       { Icon: Store, title: "Authenticated And Minted", desc: "Secure, genuine goods backed by blockchain-powered authentication", gradient: "from-green-400 to-teal-500" },
@@ -117,6 +117,7 @@ const Index = () => {
     ))}
   </div>
 </div>
+
 
       </section>
 
