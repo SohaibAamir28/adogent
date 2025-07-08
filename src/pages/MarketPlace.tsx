@@ -22,82 +22,54 @@ const Marketplace = () => {
   const [favoriteCount, setFavoriteCount] = useState(0);
 
   const categories = [
-    { name: "Athletic Shoes", value: "shoes", icon: "👟" },
-    { name: "Designer Watches", value: "watches", icon: "⌚" },
+    { name: "Luxury Watches", value: "watches", icon: "⌚" },
     { name: "Designer Fragrances", value: "fragrances", icon: "🌸" },
     { name: "High Fashion", value: "fashion", icon: "👗" },
     { name: "Premium Jewelry", value: "jewelry", icon: "💎" },
     { name: "Luxury Cars", value: "cars", icon: "🚗" },
     { name: "Fine Art", value: "art", icon: "🎨" },
-    { name: "Real Estate", value: "realestate", icon: "🏛️" }
+    { name: "Real Estate", value: "realestate", icon: "🏛️" },
+    { name: "Luxury Travel", value: "travel", icon: "✈️" }
   ];
 
   const luxuryBrands = [
-    { name: "Nike", value: "nike" },
-    { name: "Adidas", value: "adidas" },
-    { name: "Jordan", value: "jordan" },
     { name: "Rolex", value: "rolex" },
     { name: "Cartier", value: "cartier" },
     { name: "Hermès", value: "hermes" },
     { name: "Louis Vuitton", value: "lv" },
-    { name: "Chanel", value: "chanel" }
+    { name: "Chanel", value: "chanel" },
+    { name: "Tiffany & Co.", value: "tiffany" },
+    { name: "Rolls-Royce", value: "rollsroyce" },
+    { name: "Ferrari", value: "ferrari" }
   ];
 
   const priceRanges = [
-    { name: "Under $500", value: "0-500" },
-    { name: "$500 - $1K", value: "500-1000" },
-    { name: "$1K - $5K", value: "1000-5000" },
-    { name: "$5K - $10K", value: "5000-10000" },
+    { name: "Under $10K", value: "0-10000" },
     { name: "$10K - $50K", value: "10000-50000" },
-    { name: "Above $50K", value: "50000+" }
+    { name: "$50K - $100K", value: "50000-100000" },
+    { name: "$100K - $500K", value: "100000-500000" },
+    { name: "$500K - $1M", value: "500000-1000000" },
+    { name: "Above $1M", value: "1000000+" }
   ];
 
   // Enhanced luxury products data
   const luxuryProducts = [
     {
       id: 1,
-      name: "Nike Air Jordan 1 Retro High OG 'Chicago'",
-      brand: "Nike",
-      price: 450,
-      originalPrice: 500,
-      image: "https://images.unsplash.com/photo-1556906781-9a412961c28c?w=500&h=300&fit=crop",
-      category: "shoes",
-      description: "The iconic Air Jordan 1 in the legendary Chicago colorway",
-      features: ["Premium Leather", "Air Cushioning", "Rubber Outsole"],
-      availability: "In Stock",
-      rating: 4.9,
-      reviews: 156
+      name: "Rolls-Royce Phantom VIII",
+      brand: "Rolls-Royce",
+      price: 450000,
+      originalPrice: 500000,
+      image: "https://images.unsplash.com/photo-1563720223185-11003d516935?w=500&h=300&fit=crop",
+      category: "cars",
+      description: "The pinnacle of luxury motoring with bespoke craftsmanship",
+      features: ["Handcrafted Interior", "V12 Engine", "Starlight Headliner"],
+      availability: "Limited Edition",
+      rating: 5.0,
+      reviews: 24
     },
     {
       id: 2,
-      name: "Adidas Yeezy Boost 350 V2 'Zebra'",
-      brand: "Adidas",
-      price: 320,
-      originalPrice: 350,
-      image: "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=500&h=300&fit=crop",
-      category: "shoes",
-      description: "Iconic Yeezy silhouette with distinctive zebra pattern",
-      features: ["Boost Technology", "Primeknit Upper", "Limited Edition"],
-      availability: "Limited Stock",
-      rating: 4.7,
-      reviews: 298
-    },
-    {
-      id: 3,
-      name: "Nike Off-White Air Force 1 'The Ten'",
-      brand: "Nike",
-      price: 2500,
-      originalPrice: 2800,
-      image: "https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=500&h=300&fit=crop",
-      category: "shoes",
-      description: "Virgil Abloh's deconstructed take on the classic Air Force 1",
-      features: ["Deconstructed Design", "Off-White Branding", "Collector's Item"],
-      availability: "Rare",
-      rating: 5.0,
-      reviews: 89
-    },
-    {
-      id: 4,
       name: "Patek Philippe Nautilus",
       brand: "Patek Philippe",
       price: 85000,
@@ -111,7 +83,7 @@ const Marketplace = () => {
       reviews: 156
     },
     {
-      id: 5,
+      id: 3,
       name: "Hermès Birkin 35",
       brand: "Hermès",
       price: 35000,
@@ -123,6 +95,48 @@ const Marketplace = () => {
       availability: "Waitlist Only",
       rating: 5.0,
       reviews: 89
+    },
+    {
+      id: 4,
+      name: "Tiffany Yellow Diamond Necklace",
+      brand: "Tiffany & Co.",
+      price: 125000,
+      originalPrice: 150000,
+      image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=500&h=300&fit=crop",
+      category: "jewelry",
+      description: "Exquisite yellow diamond set in platinum",
+      features: ["5 Carat Diamond", "Platinum Setting", "Certified Authentic"],
+      availability: "Exclusive",
+      rating: 5.0,
+      reviews: 45
+    },
+    {
+      id: 5,
+      name: "Tom Ford Private Blend Oud Wood",
+      brand: "Tom Ford",
+      price: 350,
+      originalPrice: 380,
+      image: "https://images.unsplash.com/photo-1541643600914-78b084683601?w=500&h=300&fit=crop",
+      category: "fragrances",
+      description: "Rare oud wood fragrance with exotic spices",
+      features: ["Oud Wood", "Rare Ingredients", "Limited Edition"],
+      availability: "In Stock",
+      rating: 4.8,
+      reviews: 234
+    },
+    {
+      id: 6,
+      name: "Penthouse Manhattan Views",
+      brand: "Elite Properties",
+      price: 12500000,
+      originalPrice: 13000000,
+      image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=500&h=300&fit=crop",
+      category: "realestate",
+      description: "Luxury penthouse with panoramic city views",
+      features: ["360° Views", "Private Elevator", "Rooftop Terrace"],
+      availability: "Exclusive Listing",
+      rating: 5.0,
+      reviews: 12
     }
   ];
 
@@ -170,8 +184,8 @@ const Marketplace = () => {
     }
   };
 
-  const handleViewProduct = (product: any) => {
-    toast.success(`Opening detailed view for ${product.name}`);
+  const handleQuickPurchase = (product: any) => {
+    toast.success(`Initiating luxury concierge service for ${product.name}`);
   };
 
   return (
@@ -242,7 +256,7 @@ const Marketplace = () => {
             <div className="mb-8">
               <Label className="text-white font-medium mb-3 block">Search Luxury Items</Label>
               <Input
-                placeholder="Search for luxury shoes, watches, jewelry..."
+                placeholder="Search for luxury watches, jewelry, cars..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 text-lg py-3"
@@ -271,7 +285,7 @@ const Marketplace = () => {
               </div>
 
               <div className="space-y-3">
-                <Label className="text-white font-medium">Brand</Label>
+                <Label className="text-white font-medium">Luxury Brand</Label>
                 <Select value={selectedBrand} onValueChange={setSelectedBrand}>
                   <SelectTrigger className="bg-white/10 border-white/20 text-white">
                     <SelectValue placeholder="Select brand" />
@@ -413,14 +427,13 @@ const Marketplace = () => {
                               Wishlist
                             </Button>
                             
-                            <Link to={`/product/${product.id}`} className="flex-1">
-                              <Button 
-                                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-                              >
-                                <ShoppingCart className="w-4 h-4 mr-2" />
-                                View Details
-                              </Button>
-                            </Link>
+                            <Button 
+                              onClick={() => handleQuickPurchase(product)}
+                              className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                            >
+                              <CreditCard className="w-4 h-4 mr-2" />
+                              Inquire
+                            </Button>
                           </div>
                         </CardContent>
                       </Card>
