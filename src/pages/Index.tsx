@@ -86,7 +86,7 @@ const Index = () => {
             </div>
           </motion.div>
 
- <div className="relative">
+<div className="relative">
   <div className="space-y-6">
     {[
       { Icon: Cpu, title: "AI Analysis", desc: "Explore a wide range of styles and choices tailored to your taste", gradient: "from-purple-500 via-blue-500 to-teal-500" },
@@ -99,24 +99,23 @@ const Index = () => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ delay: index * 0.2 }}
       >
-        <Card className="bg-white/10 backdrop-blur-lg border-white/20 p-4 transition-transform duration-300 hover:rotate-0">
-          <CardContent className="p-0">
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-teal-500 rounded-lg flex items-center justify-center">
-                <card.Icon className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h3 className="text-white font-semibold">{card.title}</h3>
-                <p className="text-gray-300 text-sm">{card.desc}</p>
-              </div>
+        <div className="bg-white/10 backdrop-blur-lg border border-white/20 p-4 rounded-lg transform transition-transform duration-300 hover:scale-105">
+          <div className="flex items-center space-x-3 mb-4">
+            <div className="w-10 h-10 bg-teal-500 rounded-lg flex items-center justify-center">
+              <card.Icon className="w-5 h-5 text-white" />
             </div>
-            <div className={`w-full bg-gradient-to-r ${card.gradient} h-2 rounded-full`}></div>
-          </CardContent>
-        </Card>
+            <div>
+              <h3 className="text-white font-semibold">{card.title}</h3>
+              <p className="text-gray-300 text-sm">{card.desc}</p>
+            </div>
+          </div>
+          <div className={`w-full bg-gradient-to-r ${card.gradient} h-2 rounded-full`}></div>
+        </div>
       </motion.div>
     ))}
   </div>
 </div>
+
 
 
       </section>
