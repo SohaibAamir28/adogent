@@ -18,10 +18,10 @@ const MarketPlace = () => {
   const [showRecommendations, setShowRecommendations] = useState(false);
 
   const categories = [
-    { name: "Luxury Cars", value: "cars" },
-    { name: "Watches", value: "watches" },
+    { name: "Sneakers", value: "sneakers" },
+    { name: "Fragnances", value: "fragnances" },
     { name: "Designer Clothing", value: "clothing" },
-    { name: "Real Estate", value: "real_estate" },
+    { name: "Accessories", value: "Accessories" },
   ];
 
   // Dummy Data for Products
