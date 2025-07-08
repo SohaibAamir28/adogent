@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Heart, PackageSearch, Diamond, ShoppingCart, CreditCard, BadgeDollarSign, Gift, Gem } from 'lucide-react';
+import { ArrowLeft, Heart, PackageSearch, Diamond, ShoppingCart, CreditCard, BadgeDollarSign, Gift, Gem } from 'lucide-react'; 
 import { motion } from "framer-motion";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -22,53 +23,82 @@ const Marketplace = () => {
   const [favoriteCount, setFavoriteCount] = useState(0);
 
   const categories = [
-    { name: "Luxury Watches", value: "watches", icon: "⌚" },
+    { name: "Athletic Shoes", value: "shoes", icon: "👟" },
+    { name: "Designer Watches", value: "watches", icon: "⌚" },
     { name: "Designer Fragrances", value: "fragrances", icon: "🌸" },
     { name: "High Fashion", value: "fashion", icon: "👗" },
     { name: "Premium Jewelry", value: "jewelry", icon: "💎" },
     { name: "Luxury Cars", value: "cars", icon: "🚗" },
     { name: "Fine Art", value: "art", icon: "🎨" },
-    { name: "Real Estate", value: "realestate", icon: "🏛️" },
-    { name: "Luxury Travel", value: "travel", icon: "✈️" }
+    { name: "Real Estate", value: "realestate", icon: "🏛️" }
   ];
 
   const luxuryBrands = [
+    { name: "Nike", value: "nike" },
+    { name: "Adidas", value: "adidas" },
+    { name: "Jordan", value: "jordan" },
     { name: "Rolex", value: "rolex" },
     { name: "Cartier", value: "cartier" },
     { name: "Hermès", value: "hermes" },
     { name: "Louis Vuitton", value: "lv" },
-    { name: "Chanel", value: "chanel" },
-    { name: "Tiffany & Co.", value: "tiffany" },
-    { name: "Rolls-Royce", value: "rollsroyce" },
-    { name: "Ferrari", value: "ferrari" }
+    { name: "Chanel", value: "chanel" }
   ];
 
   const priceRanges = [
-    { name: "Under $10K", value: "0-10000" },
+    { name: "Under $500", value: "0-500" },
+    { name: "$500 - $1K", value: "500-1000" },
+    { name: "$1K - $5K", value: "1000-5000" },
+    { name: "$5K - $10K", value: "5000-10000" },
     { name: "$10K - $50K", value: "10000-50000" },
-    { name: "$50K - $100K", value: "50000-100000" },
-    { name: "$100K - $500K", value: "100000-500000" },
-    { name: "$500K - $1M", value: "500000-1000000" },
-    { name: "Above $1M", value: "1000000+" }
+    { name: "Above $50K", value: "50000+" }
   ];
 
+  // Enhanced luxury products data
   const luxuryProducts = [
     {
       id: 1,
-      name: "Rolls-Royce Phantom VIII",
-      brand: "Rolls-Royce",
-      price: 450000,
-      originalPrice: 500000,
-      image: "https://images.unsplash.com/photo-1563720223185-11003d516935?w=500&h=300&fit=crop",
-      category: "cars",
-      description: "The pinnacle of luxury motoring with bespoke craftsmanship",
-      features: ["Handcrafted Interior", "V12 Engine", "Starlight Headliner"],
-      availability: "Limited Edition",
-      rating: 5.0,
-      reviews: 24
+      name: "Nike Air Jordan 1 Retro High OG 'Chicago'",
+      brand: "Nike",
+      price: 450,
+      originalPrice: 500,
+      image: "https://images.unsplash.com/photo-1556906781-9a412961c28c?w=500&h=300&fit=crop",
+      category: "shoes",
+      description: "The iconic Air Jordan 1 in the legendary Chicago colorway",
+      features: ["Premium Leather", "Air Cushioning", "Rubber Outsole"],
+      availability: "In Stock",
+      rating: 4.9,
+      reviews: 156
     },
     {
       id: 2,
+      name: "Adidas Yeezy Boost 350 V2 'Zebra'",
+      brand: "Adidas",
+      price: 320,
+      originalPrice: 350,
+      image: "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=500&h=300&fit=crop",
+      category: "shoes",
+      description: "Iconic Yeezy silhouette with distinctive zebra pattern",
+      features: ["Boost Technology", "Primeknit Upper", "Limited Edition"],
+      availability: "Limited Stock",
+      rating: 4.7,
+      reviews: 298
+    },
+    {
+      id: 3,
+      name: "Nike Off-White Air Force 1 'The Ten'",
+      brand: "Nike",
+      price: 2500,
+      originalPrice: 2800,
+      image: "https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=500&h=300&fit=crop",
+      category: "shoes",
+      description: "Virgil Abloh's deconstructed take on the classic Air Force 1",
+      features: ["Deconstructed Design", "Off-White Branding", "Collector's Item"],
+      availability: "Rare",
+      rating: 5.0,
+      reviews: 89
+    },
+    {
+      id: 4,
       name: "Patek Philippe Nautilus",
       brand: "Patek Philippe",
       price: 85000,
@@ -82,7 +112,7 @@ const Marketplace = () => {
       reviews: 156
     },
     {
-      id: 3,
+      id: 5,
       name: "Hermès Birkin 35",
       brand: "Hermès",
       price: 35000,
@@ -94,48 +124,6 @@ const Marketplace = () => {
       availability: "Waitlist Only",
       rating: 5.0,
       reviews: 89
-    },
-    {
-      id: 4,
-      name: "Tiffany Yellow Diamond Necklace",
-      brand: "Tiffany & Co.",
-      price: 125000,
-      originalPrice: 150000,
-      image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=500&h=300&fit=crop",
-      category: "jewelry",
-      description: "Exquisite yellow diamond set in platinum",
-      features: ["5 Carat Diamond", "Platinum Setting", "Certified Authentic"],
-      availability: "Exclusive",
-      rating: 5.0,
-      reviews: 45
-    },
-    {
-      id: 5,
-      name: "Tom Ford Private Blend Oud Wood",
-      brand: "Tom Ford",
-      price: 350,
-      originalPrice: 380,
-      image: "https://images.unsplash.com/photo-1541643600914-78b084683601?w=500&h=300&fit=crop",
-      category: "fragrances",
-      description: "Rare oud wood fragrance with exotic spices",
-      features: ["Oud Wood", "Rare Ingredients", "Limited Edition"],
-      availability: "In Stock",
-      rating: 4.8,
-      reviews: 234
-    },
-    {
-      id: 6,
-      name: "Penthouse Manhattan Views",
-      brand: "Elite Properties",
-      price: 12500000,
-      originalPrice: 13000000,
-      image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=500&h=300&fit=crop",
-      category: "realestate",
-      description: "Luxury penthouse with panoramic city views",
-      features: ["360° Views", "Private Elevator", "Rooftop Terrace"],
-      availability: "Exclusive Listing",
-      rating: 5.0,
-      reviews: 12
     }
   ];
 
@@ -183,12 +171,13 @@ const Marketplace = () => {
     }
   };
 
-  const handleQuickPurchase = (product: any) => {
-    toast.success(`Initiating luxury concierge service for ${product.name}`);
+  const handleViewProduct = (product: any) => {
+    toast.success(`Opening detailed view for ${product.name}`);
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900">
+      {/* Premium Header */}
       <header className="container mx-auto px-4 py-6 border-b border-white/10">
         <div className="flex justify-between items-center">
           <Link to="/" className="flex items-center space-x-2 text-white hover:text-blue-300 transition-colors">
@@ -215,6 +204,7 @@ const Marketplace = () => {
         </div>
       </header>
 
+      {/* Hero Section */}
       <section className="container mx-auto px-4 py-16 text-center">
         <motion.div 
           initial={{ y: -30, opacity: 0 }} 
@@ -237,6 +227,7 @@ const Marketplace = () => {
         </p>
       </section>
 
+      {/* Filters & Search */}
       <section className="container mx-auto px-4 pb-12">
         <Card className="max-w-6xl mx-auto bg-white/5 backdrop-blur-xl border-white/10">
           <CardHeader className="text-center border-b border-white/10">
@@ -248,16 +239,18 @@ const Marketplace = () => {
           </CardHeader>
 
           <CardContent className="p-8">
+            {/* Search Bar */}
             <div className="mb-8">
               <Label className="text-white font-medium mb-3 block">Search Luxury Items</Label>
               <Input
-                placeholder="Search for luxury watches, jewelry, cars..."
+                placeholder="Search for luxury shoes, watches, jewelry..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 text-lg py-3"
               />
             </div>
 
+            {/* Filter Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               <div className="space-y-3">
                 <Label className="text-white font-medium">Category</Label>
@@ -279,7 +272,7 @@ const Marketplace = () => {
               </div>
 
               <div className="space-y-3">
-                <Label className="text-white font-medium">Luxury Brand</Label>
+                <Label className="text-white font-medium">Brand</Label>
                 <Select value={selectedBrand} onValueChange={setSelectedBrand}>
                   <SelectTrigger className="bg-white/10 border-white/20 text-white">
                     <SelectValue placeholder="Select brand" />
@@ -311,6 +304,7 @@ const Marketplace = () => {
               </div>
             </div>
 
+            {/* Action Button */}
             <Button
               onClick={fetchRecommendations}
               disabled={loadingProducts}
@@ -332,6 +326,7 @@ const Marketplace = () => {
         </Card>
       </section>
 
+      {/* Luxury Product Grid */}
       {showRecommendations && (
         <section className="container mx-auto px-4 pb-20">
           <div className="max-w-7xl mx-auto">
@@ -355,88 +350,81 @@ const Marketplace = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.1 }}
                     >
-                      <Link to={`/product/${product.id}`} className="block">
-                        <Card className="bg-white/10 backdrop-blur-md border-white/20 overflow-hidden hover:scale-[1.02] transition-all duration-300 group cursor-pointer">
-                          <div className="relative">
-                            <img 
-                              src={product.image} 
-                              alt={product.name} 
-                              className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300" 
-                            />
-                            <div className="absolute top-4 right-4 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                              {product.availability}
-                            </div>
-                            {product.originalPrice > product.price && (
-                              <div className="absolute top-4 left-4 bg-green-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                                Save ${(product.originalPrice - product.price).toLocaleString()}
-                              </div>
-                            )}
+                      <Card className="bg-white/10 backdrop-blur-md border-white/20 overflow-hidden hover:scale-[1.02] transition-all duration-300 group">
+                        <div className="relative">
+                          <img 
+                            src={product.image} 
+                            alt={product.name} 
+                            className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300" 
+                          />
+                          <div className="absolute top-4 right-4 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                            {product.availability}
                           </div>
-                          
-                          <CardContent className="p-6 space-y-4">
-                            <div>
-                              <p className="text-blue-400 text-sm font-medium">{product.brand}</p>
-                              <h3 className="text-white text-xl font-bold">{product.name}</h3>
-                              <p className="text-gray-300 text-sm mt-2">{product.description}</p>
+                          {product.originalPrice > product.price && (
+                            <div className="absolute top-4 left-4 bg-green-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                              Save ${(product.originalPrice - product.price).toLocaleString()}
                             </div>
+                          )}
+                        </div>
+                        
+                        <CardContent className="p-6 space-y-4">
+                          <div>
+                            <p className="text-blue-400 text-sm font-medium">{product.brand}</p>
+                            <h3 className="text-white text-xl font-bold">{product.name}</h3>
+                            <p className="text-gray-300 text-sm mt-2">{product.description}</p>
+                          </div>
 
-                            <div className="flex items-center space-x-1">
-                              {[...Array(5)].map((_, i) => (
-                                <span key={i} className={`text-sm ${i < Math.floor(product.rating) ? 'text-yellow-400' : 'text-gray-500'}`}>
-                                  ★
+                          <div className="flex items-center space-x-1">
+                            {[...Array(5)].map((_, i) => (
+                              <span key={i} className={`text-sm ${i < Math.floor(product.rating) ? 'text-yellow-400' : 'text-gray-500'}`}>
+                                ★
+                              </span>
+                            ))}
+                            <span className="text-gray-400 text-sm ml-2">({product.reviews} reviews)</span>
+                          </div>
+
+                          <div className="space-y-2">
+                            <div className="flex items-center justify-between">
+                              <span className="text-2xl font-bold text-white">
+                                ${product.price.toLocaleString()}
+                              </span>
+                              {product.originalPrice > product.price && (
+                                <span className="text-gray-400 line-through text-lg">
+                                  ${product.originalPrice.toLocaleString()}
                                 </span>
-                              ))}
-                              <span className="text-gray-400 text-sm ml-2">({product.reviews} reviews)</span>
+                              )}
                             </div>
+                          </div>
 
-                            <div className="space-y-2">
-                              <div className="flex items-center justify-between">
-                                <span className="text-2xl font-bold text-white">
-                                  ${product.price.toLocaleString()}
-                                </span>
-                                {product.originalPrice > product.price && (
-                                  <span className="text-gray-400 line-through text-lg">
-                                    ${product.originalPrice.toLocaleString()}
-                                  </span>
-                                )}
-                              </div>
-                            </div>
+                          <div className="flex flex-wrap gap-2 mb-4">
+                            {product.features.map((feature: string, index: number) => (
+                              <span key={index} className="bg-blue-600/20 text-blue-300 px-2 py-1 rounded-md text-xs">
+                                {feature}
+                              </span>
+                            ))}
+                          </div>
 
-                            <div className="flex flex-wrap gap-2 mb-4">
-                              {product.features.map((feature: string, index: number) => (
-                                <span key={index} className="bg-blue-600/20 text-blue-300 px-2 py-1 rounded-md text-xs">
-                                  {feature}
-                                </span>
-                              ))}
-                            </div>
-
-                            <div className="flex space-x-3">
+                          <div className="flex space-x-3">
+                            <Button 
+                              onClick={() => handleAddToWishlist(product)}
+                              variant="outline"
+                              className="flex-1 border-white/20 text-white hover:bg-white/10"
+                            >
+                              <Heart className="w-4 h-4 mr-2" />
+                              Wishlist
+                            </Button>
+                            
+                            <Link to={`/product/${product.id}`} className="flex-1">
                               <Button 
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  handleAddToWishlist(product);
-                                }}
-                                variant="outline"
-                                className="flex-1 border-white/20 text-white hover:bg-white/10"
+                                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
                               >
-                                <Heart className="w-4 h-4 mr-2" />
-                                Wishlist
+                                <ShoppingCart className="w-4 h-4 mr-2" />
+                                View Details
                               </Button>
-                              
-                              <Button 
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  handleQuickPurchase(product);
-                                }}
-                                className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-                              >
-                                <CreditCard className="w-4 h-4 mr-2" />
-                                Inquire
-                              </Button>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      </Link>
+                            </Link>
+                          </div>
+                        </CardContent>
+                      </Card>
                     </motion.div>
                   ))}
                 </div>
@@ -446,6 +434,7 @@ const Marketplace = () => {
         </section>
       )}
 
+      {/* Luxury Services Footer */}
       <footer className="border-t border-white/10 bg-black/20 backdrop-blur-xl">
         <div className="container mx-auto px-4 py-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
