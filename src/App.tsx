@@ -7,7 +7,7 @@ import Index from "./pages/Index";
 import MarketPlace from "./pages/MarketPlace";   // /plant-analysis
 import AIAssistant from "./pages/AIAssistant";
 import Favorites from "./pages/Favorites";
-import ProductDetail from "./pages/ProductDetail";
+
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 
@@ -22,7 +22,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/marketplace" element={<MarketPlace />} /> {/* Marketplace */}
-          <Route path="/product/:id" element={<ProductDetail />} />
+        
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/login" element={<Login />} />
           <Route path="/ai-assistant" element={<AIAssistant />} />
