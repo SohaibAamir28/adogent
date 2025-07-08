@@ -36,13 +36,16 @@ const Index = () => {
             transition={{ duration: 0.8 }}
           >
             <h1 className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-500">
-              Autonomous
+             Global Luxury
               <br />
-              <span className="text-4xl text-blue-400">Luxury Commerce</span>
+              <span className="text-4xl text-blue-400">Zero Guesswork</span>
             </h1>
 
             <p className="text-xl text-gray-300 leading-relaxed">
-              AI-powered agents managing your luxury investment journey.
+              Our AI powered agents help pull prices from trusted sources around the globe, so you don’t have to. 
+            </p>
+             <p className="text-xl text-gray-300 leading-relaxed">
+              Know exactly where the best price is in seconds.
             </p>
 
             <div className="space-y-4">
@@ -88,9 +91,9 @@ const Index = () => {
           <div className="relative">
             <div className="space-y-6">
               {[ 
-                { Icon: Cpu, title: "AI Analysis", desc: "Smart recommendations", gradient: "from-purple-500 via-blue-500 to-teal-500" },
-                { Icon: Store, title: "Verified Sellers", desc: "Trusted marketplace", gradient: "from-green-400 to-teal-500" },
-                { Icon: BarChart3, title: "Data Driven", desc: "Market insights", gradient: "from-blue-400 to-indigo-500" }
+                { Icon: Cpu, title: "AI Analysis", desc: "Explore a wide range of styles and choices tailored to your taste", gradient: "from-purple-500 via-blue-500 to-teal-500" },
+                { Icon: Store, title: "Authenticated And Minted", desc: "Secure, genuine goods backed by blockchain-powered authentication", gradient: "from-green-400 to-teal-500" },
+                { Icon: BarChart3, title: "Data Driven", desc: "In-depth market insights to keep you ahead of fashion trends", gradient: "from-blue-400 to-indigo-500" }
               ].map((card, index) => (
                 <motion.div
                   key={index}
