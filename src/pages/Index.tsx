@@ -14,8 +14,8 @@ const Index = () => {
         <div className="flex items-center justify-center">
           <motion.div
             className="flex items-center space-x-2"
-            initial={{ x: -50, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
+            initial={{ y: -50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6 }}
           >
             <div className="w-8 h-8 bg-teal-400 rounded-lg flex items-center justify-center">
