@@ -20,7 +20,7 @@ const Index = () => {
             <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center shadow-lg">
               <Store className="w-7 h-7 text-white" />
             </div>
-            <span className="text-3xl font-extrabold text-gray-800 tracking-wide">ADOGENT</span>
+            <img src="../logo1-Picsart-AiImageEnhancer.png" alt="ADOGENT Logo" className="h-10 w-auto" />
           </motion.div>
           
           <motion.nav
