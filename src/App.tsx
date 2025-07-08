@@ -24,6 +24,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/marketplace" element={<MarketPlace />} /> {/* Marketplace */}
            <Route path="/product/:id" element={<ProductDetail />} />
+
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/login" element={<Login />} />
           <Route path="/ai-assistant" element={<AIAssistant />} />
