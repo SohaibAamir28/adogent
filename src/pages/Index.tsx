@@ -86,38 +86,38 @@ const Index = () => {
             </div>
           </motion.div>
 
-          <div className="relative">
-            <div className="space-y-6">
-              {[ 
-                { Icon: Cpu, title: "AI Analysis", desc: "Explore a wide range of styles and choices tailored to your taste", gradient: "from-purple-500 via-blue-500 to-teal-500" },
-                { Icon: Store, title: "Authenticated And Minted", desc: "Secure, genuine goods backed by blockchain-powered authentication", gradient: "from-green-400 to-teal-500" },
-                { Icon: BarChart3, title: "Data Driven", desc: "In-depth market insights to keep you ahead of fashion trends", gradient: "from-blue-400 to-indigo-500" }
-              ].map((card, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.2 }}
-                >
-                  <Card className={`bg-white/10 backdrop-blur-lg border-white/20 p-4 transform hover:rotate-0 transition-transform duration-300 ${index === 1 ? 'ml-8 -rotate-1' : 'rotate-1'}`}>
-                    <CardContent className="p-0">
-                      <div className="flex items-center space-x-3 mb-4">
-                        <div className="w-10 h-10 bg-teal-500 rounded-lg flex items-center justify-center">
-                          <card.Icon className="w-5 h-5 text-white" />
-                        </div>
-                        <div>
-                          <h3 className="text-white font-semibold">{card.title}</h3>
-                          <p className="text-gray-300 text-sm">{card.desc}</p>
-                        </div>
-                      </div>
-                      <div className={`w-full bg-gradient-to-r ${card.gradient} h-2 rounded-full`}></div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
+  <div className="relative">
+  <div className="flex space-x-6">
+    {[
+      { Icon: Cpu, title: "AI Analysis", desc: "Explore a wide range of styles and choices tailored to your taste", gradient: "from-purple-500 via-blue-500 to-teal-500" },
+      { Icon: Store, title: "Authenticated And Minted", desc: "Secure, genuine goods backed by blockchain-powered authentication", gradient: "from-green-400 to-teal-500" },
+      { Icon: BarChart3, title: "Data Driven", desc: "In-depth market insights to keep you ahead of fashion trends", gradient: "from-blue-400 to-indigo-500" }
+    ].map((card, index) => (
+      <motion.div
+        key={index}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ delay: index * 0.2 }}
+      >
+        <Card className="bg-white/10 backdrop-blur-lg border-white/20 p-4 transition-transform duration-300 hover:rotate-0">
+          <CardContent className="p-0">
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="w-10 h-10 bg-teal-500 rounded-lg flex items-center justify-center">
+                <card.Icon className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h3 className="text-white font-semibold">{card.title}</h3>
+                <p className="text-gray-300 text-sm">{card.desc}</p>
+              </div>
             </div>
-          </div>
-        </div>
+            <div className={`w-full bg-gradient-to-r ${card.gradient} h-2 rounded-full`}></div>
+          </CardContent>
+        </Card>
+      </motion.div>
+    ))}
+  </div>
+</div>
+
       </section>
 
       {/* Features Section */}
